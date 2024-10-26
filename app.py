@@ -33,6 +33,16 @@ app.layout = [
 ]
 
 
+# Import dashboards
+dashboards = [
+    EyeTrackingDashboard(EYE_TRACKING_DF)
+]
+
+# Render the graphs in each dashboard to the layout
+for dashboard in dashboards:
+    rendered_graphs = dashboard.render()
+    for rendered_graph in rendered_graphs:
+        app.layout.append(dcc.Graph(figure=rendered_graph))
 
 # Run the app
 if __name__ == "__main__":
