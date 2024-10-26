@@ -1,14 +1,15 @@
 from typing import List
 import plotly.express as px
 from plotly.graph_objs._figure import Figure
+from pandas import DataFrame
 
 class EyeTrackingDashboard:
-    def __init__(self, dataframe) -> None:
+    def __init__(self, dataframe: DataFrame) -> None:
         self.dataframe = dataframe
 
         self.prepare(dataframe)
 
-    def prepare(self, dataframe) -> None:
+    def prepare(self, dataframe: DataFrame) -> None:
         # Create a count of states over time
         self.state_columns = ['looking_right', 'looking_left', 'looking_center', 'looking_up', 'looking_down']
         self.states_counts = dataframe[self.state_columns].sum().reset_index()
