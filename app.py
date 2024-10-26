@@ -10,9 +10,7 @@ from dashboards.eye_tracking import EyeTrackingDashboard
 # Initialize the Dash app
 app = dash.Dash(__name__)
 
-
-# Define the layout of the app
-layout_children = [
+app.layout = [
     html.H1("CSV Data Display"),
     dash_table.DataTable(
         id='table',
@@ -50,7 +48,6 @@ else:
             layout_children.append(dcc.Graph(figure=rendered_graph))
     
 
-app.layout = html.Div(children=layout_children)
 
 # Run the app
 if __name__ == "__main__":
