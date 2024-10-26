@@ -32,21 +32,6 @@ app.layout = [
     )
 ]
 
-# Check for an error
-if dataframe.empty:
-    layout_children.append(html.Div("Error reading the CSV file.", style={'color': 'red'}))
-else:
-    # Import dashboards
-    dashboards = [
-        EyeTrackingDashboard(dataframe)
-    ]
-
-    # Render the graphs in each dashboard to the layout
-    for dashboard in dashboards:
-        rendered_graphs = dashboard.render()
-        for rendered_graph in rendered_graphs:
-            layout_children.append(dcc.Graph(figure=rendered_graph))
-    
 
 
 # Run the app
