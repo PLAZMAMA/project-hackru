@@ -17,7 +17,7 @@ layout_children = [
     dash_table.DataTable(
         id='table',
         columns=[{"name": i, "id": i} for i in dataframe.columns],
-        data=dataframe.to_dict('records'),
+        data=eye_tracking_df.to_dict('records'),
         page_size=10,  # Adjust page size as needed
         style_table={'overflowX': 'auto'},  # Ensure horizontal scroll for wide tables
     )
