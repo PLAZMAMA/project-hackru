@@ -10,19 +10,6 @@ from dashboards.eye_tracking import EyeTrackingDashboard
 # Initialize the Dash app
 app = dash.Dash(__name__)
 
-# Function to read CSV file
-def read_csv(file_path):
-    try:
-        df = pd.read_csv(file_path)
-        df['timestamp'] = pd.to_datetime(df['timestamp'])  # Convert timestamp to datetime
-        return df
-    except Exception as e:
-        print(f"Error reading the CSV file: {e}")
-        return pd.DataFrame(columns=["Error"])  # Return an empty DataFrame with an Error column
-
-# Load the CSV data
-csv_file_path = './eye_tracking_data.csv'  # Replace with your CSV file path
-dataframe = read_csv(csv_file_path)
 
 # Define the layout of the app
 layout_children = [
@@ -35,6 +22,17 @@ layout_children = [
         style_table={'overflowX': 'auto'},  # Ensure horizontal scroll for wide tables
     )
 ]
+
+# Function to read CSV file
+def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
+    df = pd.read_csv(file_path)
+    df['timestamp'] = pd.to_datetime(df['timestamp'])  # Convert timestamp to datetime
+    return df
+
+# Load the CSV data
+eye_tracking_df = read_eye_tracking_csv()
+
+# Define the layout of the app
 
 # Check for an error
 if dataframe.empty:
