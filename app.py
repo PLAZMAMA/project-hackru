@@ -9,21 +9,6 @@ import plotly.graph_objects as go
 # Import dashboards
 from dashboards.eye_tracking import EyeTrackingDashboard
 
-# Initialize the Dash app
-app = dash.Dash(__name__)
-
-# Define the layout of the app
-app.layout = [
-    html.H1("CSV Data Display"),
-    dash_table.DataTable(
-        id='table',
-        columns=[{"name": i, "id": i} for i in dataframe.columns],
-        data=eye_tracking_df.to_dict('records'),
-        page_size=10,  # Adjust page size as needed
-        style_table={'overflowX': 'auto'},  # Ensure horizontal scroll for wide tables
-    )
-]
-
 def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
     """Reads CSV file and returns a Pandas DataFrame"""
 
@@ -31,9 +16,21 @@ def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
     df['timestamp'] = pd.to_datetime(df['timestamp'])  # Convert timestamp to datetime
     return df
 
-# Load the CSV data
-eye_tracking_df = read_eye_tracking_csv()
+# Load the CSV data and check for an error
+EYE_TRACKING_DF = read_eye_tracking_csv()
+# Initialize the Dash app
+app = dash.Dash(__name__)
 
+app.layout = [
+    html.H1("CSV Data Display"),
+    dash_table.DataTable(
+    id='table',
+    columns=[{"name": i, "id": i} for i in EYE_TRACKING_DF.columns],
+    data=EYE_TRACKING_DF.to_dict('records'),
+    page_size=10,  # Adjust page size as needed
+    style_table={'overflowX': 'auto'},  # Ensure horizontal scroll for wide tables
+    )
+]
 
 # Check for an error
 if dataframe.empty:
