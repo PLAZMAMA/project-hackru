@@ -1,0 +1,4 @@
+left_pupil_x,left_pupil_y,right_pupil_x,right_pupil_y,looking_right,looking_left,looking_center,looking_up,looking_down
+100,150,200,150,true,false,false,false,false
+120,160,220,160,false,true,false,false,false
+140,170,240,170,false,false,true,false,false
