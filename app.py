@@ -10,6 +10,7 @@ from dashboards.eye_tracking import EyeTrackingDashboard
 # Initialize the Dash app
 app = dash.Dash(__name__)
 
+# Define the layout of the app
 app.layout = [
     html.H1("CSV Data Display"),
     dash_table.DataTable(
@@ -30,7 +31,6 @@ def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
 # Load the CSV data
 eye_tracking_df = read_eye_tracking_csv()
 
-# Define the layout of the app
 
 # Check for an error
 if dataframe.empty:
