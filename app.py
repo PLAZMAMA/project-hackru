@@ -22,8 +22,9 @@ app.layout = [
     )
 ]
 
-# Function to read CSV file
 def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
+    """Reads CSV file and returns a Pandas DataFrame"""
+
     df = pd.read_csv(file_path)
     df['timestamp'] = pd.to_datetime(df['timestamp'])  # Convert timestamp to datetime
     return df
