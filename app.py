@@ -27,6 +27,7 @@ def read_app_usage_csv(file_path="./data/app_usage.csv"):
 
     df["start_time"] = pd.to_datetime(df["start_time"])  # Convert timestamp to datetime
     df["end_time"] = pd.to_datetime(df["end_time"])  # Convert timestamp to datetime
+    df["timedelta"] = pd.to_timedelta(df["timedelta"])
 
     return df
 
@@ -44,16 +45,16 @@ APP = dash.Dash(
 )
 
 
-def preprocess() -> None:
-    global APP_USAGE_DF
+def preprocess(app_usage_df) -> DataFrame:
 
     # Preprocessing: Filter by today's date
-    APP_USAGE_DF["start_time"] = pd.to_datetime(APP_USAGE_DF["start_time"])
-    APP_USAGE_DF["end_time"] = pd.to_datetime(APP_USAGE_DF["end_time"])
+    app_usage_df["start_time"] = pd.to_datetime(app_usage_df["start_time"])
+    app_usage_df["end_time"] = pd.to_datetime(app_usage_df["end_time"])
 
-    APP_USAGE_DF = APP_USAGE_DF[
-        (APP_USAGE_DF["start_time"].dt.date == datetime(2022, 7, 26).date())
+    app_usage_df = app_usage_df[
+        (app_usage_df["start_time"].dt.date == datetime(2024, 7, 26).date())
     ]
+    return app_usage_df
 
 
 def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
@@ -133,6 +134,6 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
 
 # Run the app
 if __name__ == "__main__":
-    preprocess()
-    render(APP, eye_tracking_df=EYE_TRACKING_DF, app_usage_df=APP_USAGE_DF)
+    sliced_app_usage_df = preprocess(APP_USAGE_DF)
+    render(APP, eye_tracking_df=EYE_TRACKING_DF, app_usage_df=sliced_app_usage_df)
     APP.run_server(debug=True)
