@@ -2,6 +2,10 @@ from __future__ import annotations
 import dash
 from dash import html, dcc, dash_table
 import pandas as pd
+from sleepDataGraph import sleepDataGraph
+
+# sleep_data = pd.read_csv('./data/sleepdata_2.csv', sep=';')
+# print(sleep_data.columns)
 
 # Import dashboards
 from graphs import render_eye_tracking_pie
@@ -20,13 +24,8 @@ EYE_TRACKING_DF = read_eye_tracking_csv()
 app = dash.Dash(__name__)
 
 app.layout = [
-    html.H1("CSV Data Display"),
-    dash_table.DataTable(
-    id='table',
-    columns=[{"name": i, "id": i} for i in EYE_TRACKING_DF.columns],
-    data=EYE_TRACKING_DF.to_dict('records'),
-    page_size=10,  # Adjust page size as needed
-    style_table={'overflowX': 'auto'},  # Ensure horizontal scroll for wide tables
+    html.Div(
+        sleepDataGraph()
     )
 ]
 
