@@ -1,10 +1,7 @@
 from __future__ import annotations
-from typing import List, Any
 import dash
 from dash import html, dcc, dash_table
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
 
 # Import dashboards
 from graphs import render_eye_tracking_pie
