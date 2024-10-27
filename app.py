@@ -36,41 +36,60 @@ EYE_TRACKING_DF = read_eye_tracking_csv()
 APP_USAGE_DF = read_app_usage_csv()
 
 # Initialize the Dash app
-app = dash.Dash(__name__, external_stylesheets=[
+APP = dash.Dash(__name__, external_stylesheets=[
     'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap'
 ])
 
-app.layout = []
+def render(app, **dfs) -> None:
+    """
+    Renders the app layout in the given app.
+
+    Parameters:
+        dfs: A dictionary of dataframes in the following format:
+        {
+            "dataframe_name": dataframe,
+            ...
+        }
+
+        An example is:
+        {
+            "eye_tracking_df": sliced_eye_tracking_df,
+            "app_usage_df": sliced_app_usage_df
+        }
+    """
+
+    app.layout = [] # Started empty for to avoid type hinting feakouts by the LSP
 
 
-# Header for daily summary
-today = datetime.now()
-app.layout.append(html.H1(format_date(today)))
-app.layout.append(html.H3("Daily Summary"))
+    # Header for daily summary
+    today = datetime.now()
+    app.layout.append(html.H1(format_date(today)))
+    app.layout.append(html.H3("Daily Summary"))
 
-# Import dashboards
-DASHBOARDS = [
-    FlexContainer(
-        "daily-summary",
-        [
-            dcc.Graph(figure=render_daily_summary_timeline(APP_USAGE_DF), style={'width': '100%'}),
-        ],
-        "flex-row"
-    ),
-    FlexContainer(
-        "daily-breakdown",
-        [
-            dcc.Graph(figure=render_eye_tracking_pie(EYE_TRACKING_DF)),
-            dcc.Graph(figure=render_eye_tracking_pie(EYE_TRACKING_DF))
-        ],
-        "flex-row"
-    ),
-]
+    # Import dashboards
+    DASHBOARDS = [
+        FlexContainer(
+            "daily-summary",
+            [
+                dcc.Graph(figure=render_daily_summary_timeline(dfs["app_usage_df"]), style={'width': '100%'}),
+            ],
+            "flex-row"
+        ),
+        FlexContainer(
+            "daily-breakdown",
+            [
+                dcc.Graph(figure=render_eye_tracking_pie(dfs["eye_tracking_df"])),
+                dcc.Graph(figure=render_eye_tracking_pie(dfs["eye_tracking_df"]))
+            ],
+            "flex-row"
+        ),
+    ]
 
-# Render the graphs in each dashboard to the layout
-for container in DASHBOARDS:
-    app.layout.append(container.html())
+    # Render the graphs in each dashboard to the layout
+    for container in DASHBOARDS:
+        app.layout.append(container.html())
 
 # Run the app
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    render(APP, eye_tracking_df=EYE_TRACKING_DF, app_usage_df=APP_USAGE_DF)
+    APP.run_server(debug=True)
