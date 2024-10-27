@@ -65,12 +65,16 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
     app.layout = []  # Started empty for to avoid type hinting feakouts by the LSP
 
     # Check dataframe date ranges match each other
-    dfs_date_ranges = {}
-    for df_name, df in dfs.items():
-        dfs_date_ranges[df_name] = (
-            df["start_time"].min().date(),
-            df["end_time"].max().date(),
-        )
+    dfs_date_ranges = {
+        (
+            app_usage_df["start_time"].min().date(),
+            app_usage_df["end_time"].max().date()
+        ),
+        (
+            eye_tracking_df["timestamp"].min().date(),
+            eye_tracking_df["timestamp"].max().date(),
+        ),
+    }
 
     # Check all dataframes have the same date
     if len(set(dfs_date_ranges.values())) != 1:
