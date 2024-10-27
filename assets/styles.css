@@ -8,6 +8,7 @@
     background-color: #f0f0f0;     /* Light background color */
     border: 1px solid #ccc;        /* Light border */
     border-radius: 8px;            /* Rounded corners */
+    width: 100%;
 }
 
 /* Flexbox Column Container */
@@ -20,6 +21,7 @@
     background-color: #e0e0e0;     /* Slightly darker background */
     border: 1px solid #bbb;        /* Border for the column container */
     border-radius: 8px;            /* Rounded corners */
+    width: 100%;
 }
 
 /* Flex Items */
@@ -31,4 +33,5 @@
     min-width: 100px;              /* Minimum width for each item */
     text-align: center;            /* Center text */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%;
 }
