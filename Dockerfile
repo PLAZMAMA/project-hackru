@@ -2,8 +2,6 @@ FROM python:3.9
 
 WORKDIR ./
 
-EXPOSE 8050
-
 COPY . .
 
 RUN pip install --upgrade pip
