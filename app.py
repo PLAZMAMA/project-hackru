@@ -91,4 +91,5 @@ def render(app, **dfs) -> None:
 
 # Run the app
 if __name__ == "__main__":
+    render(APP, eye_tracking_df=EYE_TRACKING_DF, app_usage_df=APP_USAGE_DF)
     APP.run_server(debug=True)
