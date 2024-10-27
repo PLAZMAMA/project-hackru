@@ -52,7 +52,7 @@ def preprocess(app_usage_df) -> DataFrame:
     app_usage_df["end_time"] = pd.to_datetime(app_usage_df["end_time"])
 
     app_usage_df = app_usage_df[
-        (app_usage_df["start_time"].dt.date == datetime(2022, 7, 26).date())
+        (app_usage_df["start_time"].dt.date == datetime(2024, 7, 26).date())
     ]
     return app_usage_df
 
