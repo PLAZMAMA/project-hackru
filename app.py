@@ -78,9 +78,13 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
 
     # Check all dataframes have the same date
     if len(dfs_date_ranges) != 1:
-        raise ValueError(
-            f"Dataframes date ranges are missmatched: {dfs_date_ranges = }"
-        )
+        # raise ValueError(
+        #     f"Dataframes date ranges are missmatched: {dfs_date_ranges = }"
+        # )
+        # TODO: For now only print this future error, uncomment the raised error
+        # above when the dataframes are passed to this function pre sliced.
+
+        print(f"Error: Dataframes date ranges are missmatched: {dfs_date_ranges = }")
 
     # Header for daily summary
     placeholder_display_date = eye_tracking_df["start_time"].min().date()
