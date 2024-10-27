@@ -43,8 +43,6 @@ app = dash.Dash(__name__, external_stylesheets=[
 app.layout = []
 
 
-print(APP_USAGE_DF)
-
 # Header for daily summary
 today = datetime.now()
 app.layout.append(html.H1(format_date(today)))
