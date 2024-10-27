@@ -2,34 +2,25 @@ from typing import List
 import plotly.express as px
 from plotly.graph_objs._figure import Figure
 from pandas import DataFrame
+import pandas as pd
+from code import interact
 
-class EyeTrackingDashboard:
-    def __init__(self, dataframe: DataFrame) -> None:
-        self.dataframe = dataframe
 
-        self.prepare(dataframe)
+def render_pie(eye_tracking_df: DataFrame) -> Figure:
+    # Preprocessing
+    state_columns = ['looking_right', 'looking_left', 'looking_center', 'looking_up', 'looking_down']
+    state_counts = eye_tracking_df[state_columns].sum().reset_index()
+    state_counts.columns = ['State', 'Count']
 
-    def prepare(self, dataframe: DataFrame) -> None:
-        # Create a count of states over time
-        self.state_columns = ['looking_right', 'looking_left', 'looking_center', 'looking_up', 'looking_down']
-        self.states_counts = dataframe[self.state_columns].sum().reset_index()
-        self.states_counts.columns = ['State', 'Count']
+    # Filter out zero counts
+    state_counts = state_counts[state_counts['Count'] > 0]
 
-        # Filter out zero counts
-        self.states_counts = self.states_counts[self.states_counts['Count'] > 0]
-    
-    def render_pie(self) -> Figure:
-        # Create a pie chart for the states
-        fig_pie = px.pie(
-            self.states_counts,
-            title='Counts of Looking States',
-            names='State',
-            values='Count'
-        )
+    # Create a pie chart for the states
+    fig_pie = px.pie(
+        state_counts,
+        title='Counts of Looking States',
+        names='State',
+        values='Count'
+    )
 
-        return fig_pie
-
-    def render(self) -> List[Figure]:
-        graphs = []
-        graphs.append(self.render_pie())
-        return graphs
+    return fig_pie
