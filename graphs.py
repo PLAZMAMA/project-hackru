@@ -41,7 +41,8 @@ def render_daily_summary_timeline(activity_df: DataFrame) -> Figure:
         x_start='start_time',
         x_end='end_time',
         y='app_name',
-        color='productive'
+        color='productive',
+        height=100
     )
 
     # Remove y-axis title and any title or subtitle
@@ -57,6 +58,12 @@ def render_daily_summary_timeline(activity_df: DataFrame) -> Figure:
         ),
         autosize=True,
         margin=dict(l=0, r=0, t=0, b=0),
+    )
+
+    # Update layout for white background
+    fig_timeline.update_layout(
+        plot_bgcolor='white',  # Background color of the plot area
+        paper_bgcolor='white'   # Background color of the entire figure
     )
 
     return fig_timeline
