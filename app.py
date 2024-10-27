@@ -44,6 +44,18 @@ APP = dash.Dash(
 )
 
 
+def preprocess() -> None:
+    global APP_USAGE_DF
+
+    # Preprocessing: Filter by today's date
+    APP_USAGE_DF["start_time"] = pd.to_datetime(APP_USAGE_DF["start_time"])
+    APP_USAGE_DF["end_time"] = pd.to_datetime(APP_USAGE_DF["end_time"])
+
+    APP_USAGE_DF = APP_USAGE_DF[
+        (APP_USAGE_DF["start_time"].dt.date == datetime(2022, 7, 26).date())
+    ]
+
+
 def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
     """
     Renders the app layout in the given app.
@@ -89,6 +101,7 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
     # Header for daily summary
     placeholder_display_date = eye_tracking_df["start_time"].min().date()
     app.layout.append(html.H1(format_date(placeholder_display_date)))
+    
     app.layout.append(html.H3("Daily Summary"))
 
     # Import dashboards
@@ -120,5 +133,6 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
 
 # Run the app
 if __name__ == "__main__":
+    preprocess()
     render(APP, eye_tracking_df=EYE_TRACKING_DF, app_usage_df=APP_USAGE_DF)
     APP.run_server(debug=True)
