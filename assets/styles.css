@@ -1,3 +1,8 @@
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+    padding: 5px;
+}
+
 /* Flexbox Row Container */
 .flex-row {
     display: flex;                  /* Enable flexbox */
