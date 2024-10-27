@@ -40,9 +40,9 @@ app = dash.Dash(__name__, external_stylesheets=[
     'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap'
 ])
 
-def render(**dfs):
+def render(app, **dfs) -> None:
     """
-    Renders the app layout
+    Renders the app layout in the given app.
 
     Parameters:
         dfs: A dictionary of dataframes in the following format:
