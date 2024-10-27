@@ -1,11 +1,18 @@
 from __future__ import annotations
-from typing import List, Dict, Any
+from typing import List
+from dash import html
+from dash.dcc.Graph import Graph
 from plotly.graph_objs._figure import Figure
 
 """Flex container that houses graphs"""
 class FlexContainer:
-    def __init__(self, name: str, graphs: List[Figure], flex_properties: Dict[str, Any]):
+    def __init__(self, name: str, graphs: List[Graph], className: str):
+        self.id = name
         self.graphs = graphs
-        # flex properties
-        # set id to name
+        self.className = className
 
+    def html(self):
+        return html.Div(
+            self.graphs,
+            className=self.className,
+        )
