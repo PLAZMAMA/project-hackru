@@ -9,7 +9,7 @@ class FlexContainer:
     def __init__(self, name: str, graphs: List[Graph], className: str):
         self.id = name
         self.graphs = graphs
-        self.className = className
+        self.className = className # flex-row or flex-col, @see assets/styles.css
 
     def html(self):
         return html.Div(
