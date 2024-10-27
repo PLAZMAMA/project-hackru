@@ -1,3 +1,4 @@
+from code import interact
 from typing import List
 import plotly.express as px
 from plotly.graph_objs._figure import Figure
@@ -63,3 +64,14 @@ def render_daily_summary_timeline(activity_df: DataFrame) -> Figure:
     )
 
     return fig_timeline
+
+def render_productivity_bar_char(eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> Figure:
+    app_usage_df["start_time"] = pd.to_datetime(app_usage_df["start_time"])
+    app_usage_df["end_time"] = pd.to_datetime(app_usage_df["end_time"])
+
+    filtered_app_usage_df = app_usage_df[
+        (app_usage_df["start_time"].dt.date == datetime(2022, 7, 26).date())
+    ]
+    productivity_df = filtered_app_usage_df[["app_name", "timedelta"]].groupby("app_name")["timedelta"].sum()
+    return px.bar(productivity_df, color=productivity_df.index, x=productivity_df.index, y="timedelta")
+

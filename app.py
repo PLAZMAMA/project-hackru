@@ -8,7 +8,7 @@ from datetime import datetime
 from util.dates import format_date
 
 # Import dashboards
-from graphs import render_eye_tracking_pie, render_daily_summary_timeline
+from graphs import render_eye_tracking_pie, render_daily_summary_timeline, render_productivity_bar_char
 from components.flex_container import FlexContainer
 
 
@@ -99,7 +99,7 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
         print(f"Error: Dataframes date ranges are missmatched: {dfs_date_ranges = }")
 
     # Header for daily summary
-    placeholder_display_date = eye_tracking_df["start_time"].min().date()
+    placeholder_display_date = app_usage_df["start_time"].min().date()
     app.layout.append(html.H1(format_date(placeholder_display_date)))
     
     app.layout.append(html.H3("Daily Summary"))
@@ -119,7 +119,7 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
         FlexContainer(
             "daily-breakdown",
             [
-                dcc.Graph(figure=render_eye_tracking_pie(eye_tracking_df)),
+                dcc.Graph(figure=render_productivity_bar_char(eye_tracking_df, app_usage_df)),
                 dcc.Graph(figure=render_eye_tracking_pie(eye_tracking_df)),
             ],
             "flex-row",
