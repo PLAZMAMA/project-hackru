@@ -27,6 +27,7 @@ def read_app_usage_csv(file_path="./data/app_usage.csv"):
 
     df["start_time"] = pd.to_datetime(df["start_time"])  # Convert timestamp to datetime
     df["end_time"] = pd.to_datetime(df["end_time"])  # Convert timestamp to datetime
+    df["timedelta"] = pd.to_timedelta(df["timedelta"])
 
     return df
 
