@@ -73,5 +73,5 @@ def render_productivity_bar_char(eye_tracking_df: DataFrame, app_usage_df: DataF
         (app_usage_df["start_time"].dt.date == datetime(2022, 7, 26).date())
     ]
     productivity_df = filtered_app_usage_df[["app_name", "timedelta"]].groupby("app_name")["timedelta"].sum()
-    return px.bar(productivity_df, color=productivity_df.index, y="timedelta")
+    return px.bar(productivity_df, color=productivity_df.index, x=productivity_df.index, y="timedelta")
 
