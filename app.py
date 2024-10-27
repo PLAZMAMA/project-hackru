@@ -134,6 +134,6 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
 
 # Run the app
 if __name__ == "__main__":
-    preprocess(APP_USAGE_DF)
-    render(APP, eye_tracking_df=EYE_TRACKING_DF, app_usage_df=APP_USAGE_DF)
+    sliced_app_usage_df = preprocess(APP_USAGE_DF)
+    render(APP, eye_tracking_df=EYE_TRACKING_DF, app_usage_df=sliced_app_usage_df)
     APP.run_server(debug=True)
