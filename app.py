@@ -97,7 +97,7 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
             "daily-summary",
             [
                 dcc.Graph(
-                    figure=render_daily_summary_timeline(dfs["app_usage_df"]),
+                    figure=render_daily_summary_timeline(app_usage_df),
                     style={"width": "100%"},
                 ),
             ],
@@ -106,8 +106,8 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
         FlexContainer(
             "daily-breakdown",
             [
-                dcc.Graph(figure=render_eye_tracking_pie(dfs["eye_tracking_df"])),
-                dcc.Graph(figure=render_eye_tracking_pie(dfs["eye_tracking_df"])),
+                dcc.Graph(figure=render_eye_tracking_pie(eye_tracking_df)),
+                dcc.Graph(figure=render_eye_tracking_pie(eye_tracking_df)),
             ],
             "flex-row",
         ),
