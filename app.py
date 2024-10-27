@@ -3,6 +3,9 @@ import dash
 from dash import html, dcc, dash_table
 import pandas as pd
 
+from datetime import datetime
+from util.dates import format_date
+
 # Import dashboards
 from graphs import (
     render_eye_tracking_pie, 
@@ -33,12 +36,19 @@ EYE_TRACKING_DF = read_eye_tracking_csv()
 APP_USAGE_DF = read_app_usage_csv()
 
 # Initialize the Dash app
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_stylesheets=[
+    'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap'
+])
 
 app.layout = []
 
 
 print(APP_USAGE_DF)
+
+# Header for daily summary
+today = datetime.now()
+app.layout.append(html.H1(format_date(today)))
+app.layout.append(html.H3("Daily Summary"))
 
 # Import dashboards
 DASHBOARDS = [
