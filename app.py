@@ -41,6 +41,23 @@ app = dash.Dash(__name__, external_stylesheets=[
 ])
 
 def render(**dfs):
+    """
+    Renders the app layout
+
+    Parameters:
+        dfs: A dictionary of dataframes in the following format:
+        {
+            "dataframe_name": dataframe,
+            ...
+        }
+
+        An example is:
+        {
+            "eye_tracking_df": sliced_eye_tracking_df,
+            "app_usage_df": sliced_app_usage_df
+        }
+    """
+
     app.layout = [] # Started empty for to avoid type hinting feakouts by the LSP
 
 
