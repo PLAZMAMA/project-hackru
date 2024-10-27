@@ -83,7 +83,7 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
         )
 
     # Header for daily summary
-    placeholder_display_date = dfs["eye_tracking_df"]["start_time"].min().date()
+    placeholder_display_date = eye_tracking_df["start_time"].min().date()
     app.layout.append(html.H1(format_date(placeholder_display_date)))
     app.layout.append(html.H3("Daily Summary"))
 
