@@ -2,6 +2,7 @@ from __future__ import annotations
 import dash
 from dash import html, dcc, dash_table
 import pandas as pd
+from pandas import DataFrame
 
 from datetime import datetime
 from util.dates import format_date
@@ -43,7 +44,7 @@ APP = dash.Dash(
 )
 
 
-def render(app, **dfs) -> None:
+def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
     """
     Renders the app layout in the given app.
 
