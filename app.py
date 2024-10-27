@@ -51,7 +51,7 @@ def render(app, **dfs) -> None:
             ...
         }
 
-        An example is:
+        The current expected dataframes are:
         {
             "eye_tracking_df": sliced_eye_tracking_df,
             "app_usage_df": sliced_app_usage_df
