@@ -40,10 +40,8 @@ app = dash.Dash(__name__, external_stylesheets=[
     'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap'
 ])
 
-app.layout = []
+app.layout = [] # Started empty for to avoid type hinting feakouts by the LSP
 
-
-print(APP_USAGE_DF)
 
 # Header for daily summary
 today = datetime.now()
