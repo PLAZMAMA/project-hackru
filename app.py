@@ -45,7 +45,7 @@ APP = dash.Dash(
 )
 
 
-def preprocess(app_usage_df) -> None:
+def preprocess(app_usage_df) -> DataFrame:
 
     # Preprocessing: Filter by today's date
     app_usage_df["start_time"] = pd.to_datetime(app_usage_df["start_time"])
@@ -54,6 +54,7 @@ def preprocess(app_usage_df) -> None:
     app_usage_df = app_usage_df[
         (app_usage_df["start_time"].dt.date == datetime(2022, 7, 26).date())
     ]
+    return app_usage_df
 
 
 def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
