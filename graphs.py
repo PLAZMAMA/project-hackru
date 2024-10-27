@@ -4,6 +4,7 @@ from plotly.graph_objs._figure import Figure
 from pandas import DataFrame
 import pandas as pd
 from code import interact
+from datetime import datetime
 
 
 def render_eye_tracking_pie(eye_tracking_df: DataFrame) -> Figure:
@@ -24,3 +25,38 @@ def render_eye_tracking_pie(eye_tracking_df: DataFrame) -> Figure:
     )
 
     return fig_pie
+
+def render_daily_summary_timeline(activity_df: DataFrame) -> Figure:
+    # Preprocessing: Filter by today's date
+    activity_df['start_time'] = pd.to_datetime(activity_df['start_time'])
+    activity_df['end_time'] = pd.to_datetime(activity_df['end_time'])
+
+    filtered_df = activity_df[
+        (activity_df['start_time'].dt.date == datetime(2022, 7, 26).date())
+    ]
+
+    # Create a bar chart
+    fig_timeline = px.timeline(
+        filtered_df,
+        x_start='start_time',
+        x_end='end_time',
+        y='app_name',
+        color='productive'
+    )
+
+    # Remove y-axis title and any title or subtitle
+    fig_timeline.update_layout(
+        yaxis_title=None,
+        title=None,
+        yaxis=dict(tickvals=[], ticktext=[]),
+        xaxis=dict(
+            tickmode='array',
+            tickvals=[f'{i:02}:00' for i in range(24)],
+            ticktext=[f'{i}:00' for i in range(24)],
+            range=['00:00', '24:00']
+        ),
+        autosize=True,
+        margin=dict(l=0, r=0, t=0, b=0),
+    )
+
+    return fig_timeline

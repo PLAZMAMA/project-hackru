@@ -4,7 +4,10 @@ from dash import html, dcc, dash_table
 import pandas as pd
 
 # Import dashboards
-from graphs import render_eye_tracking_pie
+from graphs import (
+    render_eye_tracking_pie, 
+    render_daily_summary_timeline
+)
 from components.flex_container import FlexContainer
 
 def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
@@ -14,25 +17,38 @@ def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
     df['timestamp'] = pd.to_datetime(df['timestamp'])  # Convert timestamp to datetime
     return df
 
+def read_app_usage_csv(file_path = './data/app_usage.csv'):
+    """Reads CSV file and returns a Pandas DataFrame"""
+
+    df = pd.read_csv(file_path)
+
+    df['start_time'] = pd.to_datetime(df['start_time'])  # Convert timestamp to datetime
+    df['end_time'] = pd.to_datetime(df['end_time'])  # Convert timestamp to datetime
+
+    return df
+    
+
 # Load the CSV data and check for an error
 EYE_TRACKING_DF = read_eye_tracking_csv()
+APP_USAGE_DF = read_app_usage_csv()
+
 # Initialize the Dash app
 app = dash.Dash(__name__)
 
-app.layout = [
-    html.H1("CSV Data Display"),
-    dash_table.DataTable(
-    id='table',
-    columns=[{"name": i, "id": i} for i in EYE_TRACKING_DF.columns],
-    data=EYE_TRACKING_DF.to_dict('records'),
-    page_size=10,  # Adjust page size as needed
-    style_table={'overflowX': 'auto'},  # Ensure horizontal scroll for wide tables
-    )
-]
+app.layout = []
 
+
+print(APP_USAGE_DF)
 
 # Import dashboards
 DASHBOARDS = [
+    FlexContainer(
+        "daily-summary",
+        [
+            dcc.Graph(figure=render_daily_summary_timeline(APP_USAGE_DF), style={'width': '100%'}),
+        ],
+        "flex-row"
+    ),
     FlexContainer(
         "daily-breakdown",
         [
