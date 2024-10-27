@@ -47,7 +47,7 @@ DASHBOARDS = [
 
 # Render the graphs in each dashboard to the layout
 for dashboard in DASHBOARDS:
-    for rendered_graph in dashboard:
+    for rendered_graph in dashboard.graphs:
         app.layout.append(dcc.Graph(figure=rendered_graph))
 
 # Run the app
