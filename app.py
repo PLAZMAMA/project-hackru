@@ -40,6 +40,17 @@ APP = dash.Dash(__name__, external_stylesheets=[
     'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap'
 ])
 
+def preprocess() -> None:
+    global APP_USAGE_DF
+    
+    # Preprocessing: Filter by today's date
+    APP_USAGE_DF['start_time'] = pd.to_datetime(APP_USAGE_DF['start_time'])
+    APP_USAGE_DF['end_time'] = pd.to_datetime(APP_USAGE_DF['end_time'])
+
+    APP_USAGE_DF = APP_USAGE_DF[
+        (APP_USAGE_DF['start_time'].dt.date == datetime(2022, 7, 26).date())
+    ]
+
 def render(app, **dfs) -> None:
     """
     Renders the app layout in the given app.
@@ -91,5 +102,6 @@ def render(app, **dfs) -> None:
 
 # Run the app
 if __name__ == "__main__":
+    preprocess()
     render(APP, eye_tracking_df=EYE_TRACKING_DF, app_usage_df=APP_USAGE_DF)
     APP.run_server(debug=True)
