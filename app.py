@@ -44,15 +44,14 @@ APP = dash.Dash(
 )
 
 
-def preprocess() -> None:
-    global APP_USAGE_DF
+def preprocess(app_usage_df) -> None:
 
     # Preprocessing: Filter by today's date
-    APP_USAGE_DF["start_time"] = pd.to_datetime(APP_USAGE_DF["start_time"])
-    APP_USAGE_DF["end_time"] = pd.to_datetime(APP_USAGE_DF["end_time"])
+    app_usage_df["start_time"] = pd.to_datetime(app_usage_df["start_time"])
+    app_usage_df["end_time"] = pd.to_datetime(app_usage_df["end_time"])
 
-    APP_USAGE_DF = APP_USAGE_DF[
-        (APP_USAGE_DF["start_time"].dt.date == datetime(2022, 7, 26).date())
+    app_usage_df = app_usage_df[
+        (app_usage_df["start_time"].dt.date == datetime(2022, 7, 26).date())
     ]
 
 
@@ -133,6 +132,6 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
 
 # Run the app
 if __name__ == "__main__":
-    preprocess()
+    preprocess(APP_USAGE_DF)
     render(APP, eye_tracking_df=EYE_TRACKING_DF, app_usage_df=APP_USAGE_DF)
     APP.run_server(debug=True)
