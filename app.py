@@ -77,9 +77,9 @@ def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
     }
 
     # Check all dataframes have the same date
-    if len(set(dfs_date_ranges.values())) != 1:
+    if len(dfs_date_ranges) != 1:
         raise ValueError(
-            f"Dataframes {dfs_date_ranges.keys()} dates are missmatched: {dfs_date_ranges = }"
+            f"Dataframes date ranges are missmatched: {dfs_date_ranges = }"
         )
 
     # Header for daily summary
