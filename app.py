@@ -13,7 +13,7 @@ from graphs import (
 )
 from components.flex_container import FlexContainer
 
-def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
+def read_eye_tracking_csv(file_path = './data/eye_tracking_data_v2.csv'):
     """Reads CSV file and returns a Pandas DataFrame"""
 
     df = pd.read_csv(file_path)
@@ -42,8 +42,6 @@ app = dash.Dash(__name__, external_stylesheets=[
 
 app.layout = []
 
-
-print(APP_USAGE_DF)
 
 # Header for daily summary
 today = datetime.now()
