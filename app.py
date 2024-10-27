@@ -2,6 +2,7 @@ from __future__ import annotations
 import dash
 from dash import html, dcc, dash_table
 import pandas as pd
+from pandas import DataFrame
 
 from datetime import datetime
 from util.dates import format_date
@@ -55,7 +56,7 @@ def preprocess() -> None:
     ]
 
 
-def render(app, **dfs) -> None:
+def render(app, eye_tracking_df: DataFrame, app_usage_df: DataFrame) -> None:
     """
     Renders the app layout in the given app.
 
@@ -66,7 +67,7 @@ def render(app, **dfs) -> None:
             ...
         }
 
-        An example is:
+        The current expected dataframes are:
         {
             "eye_tracking_df": sliced_eye_tracking_df,
             "app_usage_df": sliced_app_usage_df
@@ -75,9 +76,32 @@ def render(app, **dfs) -> None:
 
     app.layout = []  # Started empty for to avoid type hinting feakouts by the LSP
 
+    # Check dataframe date ranges match each other
+    dfs_date_ranges = {
+        (
+            app_usage_df["start_time"].min().date(),
+            app_usage_df["end_time"].max().date()
+        ),
+        (
+            eye_tracking_df["timestamp"].min().date(),
+            eye_tracking_df["timestamp"].max().date(),
+        ),
+    }
+
+    # Check all dataframes have the same date
+    if len(dfs_date_ranges) != 1:
+        # raise ValueError(
+        #     f"Dataframes date ranges are missmatched: {dfs_date_ranges = }"
+        # )
+        # TODO: For now only print this future error, uncomment the raised error
+        # above when the dataframes are passed to this function pre sliced.
+
+        print(f"Error: Dataframes date ranges are missmatched: {dfs_date_ranges = }")
+
     # Header for daily summary
-    today = datetime.now()
-    app.layout.append(html.H1(format_date(today)))
+    placeholder_display_date = eye_tracking_df["start_time"].min().date()
+    app.layout.append(html.H1(format_date(placeholder_display_date)))
+    
     app.layout.append(html.H3("Daily Summary"))
 
     # Import dashboards
@@ -86,7 +110,7 @@ def render(app, **dfs) -> None:
             "daily-summary",
             [
                 dcc.Graph(
-                    figure=render_daily_summary_timeline(dfs["app_usage_df"]),
+                    figure=render_daily_summary_timeline(app_usage_df),
                     style={"width": "100%"},
                 ),
             ],
@@ -95,8 +119,8 @@ def render(app, **dfs) -> None:
         FlexContainer(
             "daily-breakdown",
             [
-                dcc.Graph(figure=render_eye_tracking_pie(dfs["eye_tracking_df"])),
-                dcc.Graph(figure=render_eye_tracking_pie(dfs["eye_tracking_df"])),
+                dcc.Graph(figure=render_eye_tracking_pie(eye_tracking_df)),
+                dcc.Graph(figure=render_eye_tracking_pie(eye_tracking_df)),
             ],
             "flex-row",
         ),

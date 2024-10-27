@@ -28,8 +28,18 @@ def render_eye_tracking_pie(eye_tracking_df: DataFrame) -> Figure:
     )
 
     return fig_pie
+  
 
+def render_daily_summary_timeline(activity_df: DataFrame) -> Figure:
+    # Preprocessing: Filter by today's date
+    activity_df["start_time"] = pd.to_datetime(activity_df["start_time"])
+    activity_df["end_time"] = pd.to_datetime(activity_df["end_time"])
 
+    filtered_df = activity_df[
+        (activity_df["start_time"].dt.date == datetime(2022, 7, 26).date())
+    ]
+
+    
 def render_daily_summary_timeline(activity_df: DataFrame) -> Figure:
     # Create a bar chart
     fig_timeline = px.timeline(
