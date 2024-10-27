@@ -8,8 +8,9 @@ import plotly.graph_objs as go
 
 # Download latest version
 path = kagglehub.dataset_download("ruchi798/analyzing-screen-time")
-csv_path = os.path.join(path, "Screentime - Overall Usage.csv")
-df = pd.read_csv(csv_path)
+iphone_path = os.path.join(path, "Screentime - Overall Usage.csv")
+df = pd.read_csv(iphone_path)
+appdata = pd.read_csv('data/app_usage.csv')
 
 xy_graph = go.Figure(data = [go.Scatter(x = df['Date '], y = df['Unlocks'])])
 
@@ -22,8 +23,8 @@ app.layout = html.Div([
     html.Div(children = [dcc.Graph(figure=xy_graph)]),
     dash_table.DataTable(
         id='table',
-        columns=[{"name": i, "id": i} for i in df.columns],  # Create columns for each DataFrame column
-        data=df.to_dict('records'),  # Convert DataFrame to a dictionary for Dash
+        columns=[{"name": i, "id": i} for i in appdata.columns],  # Create columns for each DataFrame column
+        data=appdata.to_dict('records'),  # Convert DataFrame to a dictionary for Dash
         style_table={'overflowX': 'auto'},  # Style to make table scrollable if too wide
         page_size=10  # Optional: Limit rows per page
     ),
