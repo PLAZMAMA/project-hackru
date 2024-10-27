@@ -39,16 +39,16 @@ DASHBOARDS = [
     FlexContainer(
         "daily-breakdown",
         [
-            render_eye_tracking_pie(EYE_TRACKING_DF)
+            dcc.Graph(figure=render_eye_tracking_pie(EYE_TRACKING_DF)),
+            dcc.Graph(figure=render_eye_tracking_pie(EYE_TRACKING_DF))
         ],
-        {}
+        "flex-row"
     ),
 ]
 
 # Render the graphs in each dashboard to the layout
-for dashboard in DASHBOARDS:
-    for rendered_graph in dashboard.graphs:
-        app.layout.append(dcc.Graph(figure=rendered_graph))
+for container in DASHBOARDS:
+    app.layout.append(container.html())
 
 # Run the app
 if __name__ == "__main__":
