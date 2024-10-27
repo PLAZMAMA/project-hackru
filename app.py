@@ -36,7 +36,7 @@ EYE_TRACKING_DF = read_eye_tracking_csv()
 APP_USAGE_DF = read_app_usage_csv()
 
 # Initialize the Dash app
-app = dash.Dash(__name__, external_stylesheets=[
+APP = dash.Dash(__name__, external_stylesheets=[
     'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap'
 ])
 
