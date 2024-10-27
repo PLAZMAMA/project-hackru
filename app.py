@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 # Import dashboards
-from dashboards.eye_tracking import EyeTrackingDashboard
+from dashboards import eye_tracking
 
 def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
     """Reads CSV file and returns a Pandas DataFrame"""
@@ -34,14 +34,15 @@ app.layout = [
 
 
 # Import dashboards
-dashboards = [
-    EyeTrackingDashboard(EYE_TRACKING_DF)
+DASHBOARDS = [
+    [
+        eye_tracking.render_pie(EYE_TRACKING_DF)
+    ]
 ]
 
 # Render the graphs in each dashboard to the layout
-for dashboard in dashboards:
-    rendered_graphs = dashboard.render()
-    for rendered_graph in rendered_graphs:
+for dashboard in DASHBOARDS:
+    for rendered_graph in dashboard:
         app.layout.append(dcc.Graph(figure=rendered_graph))
 
 # Run the app
