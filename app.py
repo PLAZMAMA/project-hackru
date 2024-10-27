@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 
 # Import dashboards
 from dashboards import eye_tracking
+from dashboards.flex_container import FlexContainer
 
 def read_eye_tracking_csv(file_path = './data/eye_tracking_data.csv'):
     """Reads CSV file and returns a Pandas DataFrame"""
@@ -35,9 +36,13 @@ app.layout = [
 
 # Import dashboards
 DASHBOARDS = [
-    [
-        eye_tracking.render_pie(EYE_TRACKING_DF)
-    ]
+    FlexContainer(
+        "daily-breakdown",
+        [
+            eye_tracking.render_pie(EYE_TRACKING_DF)
+        ],
+        {}
+    ),
 ]
 
 # Render the graphs in each dashboard to the layout
