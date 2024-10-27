@@ -60,6 +60,17 @@ def render(app, **dfs) -> None:
 
     app.layout = [] # Started empty for to avoid type hinting feakouts by the LSP
 
+    # Check dataframe dates are uniform
+    dfs_dates = {}
+    for df_name, df in dfs.items():
+        if df["start_time"].min().date() != df["end_time"].max().date():
+            raise ValueError(f"Dataframe {df_name} has mismatched dates {df["start_time"].min() = } and {df["end_time"].max() = }")
+
+        dfs_dates[df_name] = df["start_time"].min().date()
+
+    # Check all dataframes have the same date
+    if len(set(dfs_dates.values())) != 1:
+        raise ValueError(f"Dataframes {dfs_dates.keys()} dates are missmatched: {dfs_dates = }")
 
     # Header for daily summary
     today = datetime.now()
